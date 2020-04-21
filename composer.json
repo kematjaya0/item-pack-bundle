@@ -9,9 +9,14 @@
         }
     ],
     "minimum-stability": "stable",
-    "require": {},
+    "require": {
+        "symfony/form": "^5.0",
+        "symfony/event-dispatcher": "^5.0",
+        "doctrine/common": "^2.12"
+    },
     "require-dev": {
-        "phpunit/phpunit": "^6.4"
+        "phpunit/phpunit": "^6.4",
+        "doctrine/doctrine-fixtures-bundle": "^3.3"
     },
     "autoload": {
         "psr-4": {
