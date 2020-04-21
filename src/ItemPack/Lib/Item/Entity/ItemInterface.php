@@ -29,4 +29,8 @@ interface ItemInterface
     public function getLastStock(): ?float;
 
     public function setLastStock(float $last_stock): self;
+    
+    public function getLastPrice(): ?float;
+
+    public function setLastPrice(float $last_price): self;
 }
