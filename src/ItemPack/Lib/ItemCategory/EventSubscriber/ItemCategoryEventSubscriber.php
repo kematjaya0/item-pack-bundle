@@ -1,8 +1,8 @@
 <?php
 
-namespace Kematjaya\ItemPack\ItemCategory\EventSubscriber;
+namespace Kematjaya\ItemPack\Lib\ItemCategory\EventSubscriber;
 
-use Kematjaya\ItemPack\ItemCategory\Entity\ItemCategoryInterface;
+use Kematjaya\ItemPack\Lib\ItemCategory\Entity\ItemCategoryInterface;
 use Symfony\Component\Form\FormEvent;
 use Symfony\Component\Form\FormEvents;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;

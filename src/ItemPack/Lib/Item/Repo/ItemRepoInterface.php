@@ -1,8 +1,8 @@
 <?php
 
-namespace Kematjaya\ItemPack\Item\Repo;
+namespace Kematjaya\ItemPack\Lib\Item\Repo;
 
-use Kematjaya\ItemPack\Item\Entity\ItemInterface;
+use Kematjaya\ItemPack\Lib\Item\Entity\ItemInterface;
 use Doctrine\Common\Persistence\ObjectRepository;
 /**
  * @author Nur Hidayatullah <kematjaya0@gmail.com>

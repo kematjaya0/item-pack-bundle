@@ -1,6 +1,6 @@
 <?php
 
-namespace Kematjaya\ItemPack\ItemCategory\Entity;
+namespace Kematjaya\ItemPack\Lib\ItemCategory\Entity;
 
 /**
  * @author Nur Hidayatullah <kematjaya0@gmail.com>

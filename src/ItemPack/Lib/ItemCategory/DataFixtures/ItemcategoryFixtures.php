@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Library\ItemCategory\DataFixtures;
+namespace Kematjaya\ItemPack\Lib\ItemCategory\DataFixtures;
 
-use App\Library\ItemCategory\Repo\ItemCategoryRepoInterface;
+use Kematjaya\ItemPack\Lib\ItemCategory\Repo\ItemCategoryRepoInterface;
 use Doctrine\Persistence\ObjectManager;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 /**

@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<container xmlns="http://symfony.com/schema/dic/services"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
+    <services>
+        <defaults public="false" />
+        <!--<service id="Kematjaya\Breadcrumb\Lib\Breadcrumb" class="Kematjaya\Breadcrumb\Lib\Breadcrumb"></service>
+        <service id="Kematjaya\Breadcrumb\Lib\Builder" class="Kematjaya\Breadcrumb\Lib\Builder">
+            <argument type="service" id="translator" />
+            <call method="setRouter">
+                <argument type="service" id="router" />
+            </call>
+        </service>
+        <service id="kematjaya.breadcrumbs_builder" alias="Kematjaya\Breadcrumb\Lib\Builder" public="true"></service>
+        <service id="Kematjaya\Breadcrumb\Helper\BreadcrumbHelper" class="Kematjaya\Breadcrumb\Helper\BreadcrumbHelper">
+            <argument type="service" id="twig" />
+            <argument type="service" id="kematjaya.breadcrumbs_builder" />
+            <argument type="service" id="service_container" />
+            <tag name="templating.helper" alias="breadcrumbs" />
+        </service>
+        <service id="kematjaya.breadcrumbs_helper" alias="Kematjaya\Breadcrumb\Helper\BreadcrumbHelper" public="true"></service>
+        <service id="Kematjaya\Breadcrumb\Extension\BreadcrumbsExtension" class="Kematjaya\Breadcrumb\Extension\BreadcrumbsExtension">
+            <argument type="service" id="kematjaya.breadcrumbs_helper" />
+            <tag name="twig.extension"/>
+        </service>
+        <service id="kematjaya.breadcrumbs_extension" alias="Kematjaya\Breadcrumb\Extension\BreadcrumbsExtension" public="true"></service>-->
+    </services>
+</container>

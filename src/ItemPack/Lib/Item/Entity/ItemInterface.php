@@ -1,8 +1,8 @@
 <?php
 
-namespace Kematjaya\ItemPack\Item\Entity;
+namespace Kematjaya\ItemPack\Lib\Item\Entity;
 
-use Kematjaya\ItemPack\ItemCategory\Entity\ItemCategoryInterface;
+use Kematjaya\ItemPack\Lib\ItemCategory\Entity\ItemCategoryInterface;
 /**
  * @author Nur Hidayatullah <kematjaya0@gmail.com>
  */
