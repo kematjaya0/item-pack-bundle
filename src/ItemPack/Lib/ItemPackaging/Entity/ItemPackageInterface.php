@@ -15,7 +15,7 @@ interface ItemPackageInterface
     
     public function setSymbol(string $symbol):self;
     
-    public function getSymbol():string;
+    public function getSymbol():?string;
     
     public function isSmallestUnit():bool;
     
