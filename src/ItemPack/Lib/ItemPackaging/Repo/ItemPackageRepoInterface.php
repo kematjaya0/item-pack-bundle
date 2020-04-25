@@ -2,6 +2,7 @@
 
 namespace Kematjaya\ItemPack\Lib\ItemPackaging\Repo;
 
+use Kematjaya\ItemPack\Lib\Item\Entity\ItemInterface;
 use Kematjaya\ItemPack\Lib\ItemPackaging\Entity\ItemPackageInterface;
 use Doctrine\Common\Persistence\ObjectRepository;
 /**
@@ -10,6 +11,6 @@ use Doctrine\Common\Persistence\ObjectRepository;
 interface ItemPackageRepoInterface extends ObjectRepository 
 {
     
-    public function createPackage():ItemPackageInterface;
+    public function createPackage(ItemInterface $item):ItemPackageInterface;
     
 }
