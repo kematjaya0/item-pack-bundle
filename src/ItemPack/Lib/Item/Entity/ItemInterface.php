@@ -2,6 +2,7 @@
 
 namespace Kematjaya\ItemPack\Lib\Item\Entity;
 
+use Doctrine\Common\Collections\Collection;
 use Kematjaya\ItemPack\Lib\ItemCategory\Entity\ItemCategoryInterface;
 /**
  * @author Nur Hidayatullah <kematjaya0@gmail.com>
@@ -33,4 +34,6 @@ interface ItemInterface
     public function getLastPrice(): ?float;
 
     public function setLastPrice(float $last_price): self;
+    
+    public function getItemPackages(): Collection;
 }
