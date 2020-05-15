@@ -4,25 +4,14 @@
     xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
     <services>
         <defaults public="false" />
-        <!--<service id="Kematjaya\Breadcrumb\Lib\Breadcrumb" class="Kematjaya\Breadcrumb\Lib\Breadcrumb"></service>
-        <service id="Kematjaya\Breadcrumb\Lib\Builder" class="Kematjaya\Breadcrumb\Lib\Builder">
-            <argument type="service" id="translator" />
-            <call method="setRouter">
-                <argument type="service" id="router" />
-            </call>
+        
+        <service id="Kematjaya\ItemPack\Service\PriceService" class="Kematjaya\ItemPack\Service\PriceService">
+            <argument type="service" id="doctrine.orm.default_entity_manager" />
         </service>
-        <service id="kematjaya.breadcrumbs_builder" alias="Kematjaya\Breadcrumb\Lib\Builder" public="true"></service>
-        <service id="Kematjaya\Breadcrumb\Helper\BreadcrumbHelper" class="Kematjaya\Breadcrumb\Helper\BreadcrumbHelper">
-            <argument type="service" id="twig" />
-            <argument type="service" id="kematjaya.breadcrumbs_builder" />
-            <argument type="service" id="service_container" />
-            <tag name="templating.helper" alias="breadcrumbs" />
+        <service id="Kematjaya\ItemPack\Service\StockService" class="Kematjaya\ItemPack\Service\StockService">
+            <argument type="service" id="doctrine.orm.default_entity_manager" />
         </service>
-        <service id="kematjaya.breadcrumbs_helper" alias="Kematjaya\Breadcrumb\Helper\BreadcrumbHelper" public="true"></service>
-        <service id="Kematjaya\Breadcrumb\Extension\BreadcrumbsExtension" class="Kematjaya\Breadcrumb\Extension\BreadcrumbsExtension">
-            <argument type="service" id="kematjaya.breadcrumbs_helper" />
-            <tag name="twig.extension"/>
-        </service>
-        <service id="kematjaya.breadcrumbs_extension" alias="Kematjaya\Breadcrumb\Extension\BreadcrumbsExtension" public="true"></service>-->
+        <service id="kematjaya.price_service" alias="Kematjaya\ItemPack\Service\PriceService" public="true"></service>
+        <service id="kematjaya.stock_service" alias="Kematjaya\ItemPack\Service\StockService" public="true"></service>
     </services>
 </container>

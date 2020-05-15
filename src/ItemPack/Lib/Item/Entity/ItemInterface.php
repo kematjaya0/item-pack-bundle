@@ -36,4 +36,8 @@ interface ItemInterface
     public function setLastPrice(float $last_price): self;
     
     public function getItemPackages(): Collection;
+    
+    public function getPrincipalPrice(): ?float;
+
+    public function setPrincipalPrice(float $principal_price): self;
 }
