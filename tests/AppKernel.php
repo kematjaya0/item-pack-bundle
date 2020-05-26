@@ -1,9 +1,7 @@
 <?php
 
-namespace Kematjaya\Tests\ItemPack;
+namespace Kematjaya\ItemPack\Tests;
 
-use Kematjaya\ItemPack\KmjItemPackBundle;
-use Symfony\Bundle\FrameworkBundle\FrameworkBundle;
 use Symfony\Component\HttpKernel\Kernel;
 use Symfony\Component\Config\Loader\LoaderInterface;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
@@ -15,8 +13,8 @@ class AppKernel extends Kernel
     public function registerBundles()
     {
         return [
-            new KmjItemPackBundle(),
-            new FrameworkBundle()
+            new \Kematjaya\ItemPack\KmjItemPackBundle(),
+            new \Symfony\Bundle\FrameworkBundle\FrameworkBundle()
         ];
     }
     
