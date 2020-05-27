@@ -5,12 +5,13 @@
     <services>
         <defaults public="false" />
         
-        <service id="Kematjaya\ItemPack\Service\PriceService" class="Kematjaya\ItemPack\Service\PriceService">
+        <service id="Kematjaya\ItemPack\Service\DoctrineManager" class="Kematjaya\ItemPack\Service\DoctrineManager">
             <argument type="service" id="doctrine.orm.default_entity_manager" />
         </service>
-        <service id="Kematjaya\ItemPack\Service\StockService" class="Kematjaya\ItemPack\Service\StockService">
-            <argument type="service" id="doctrine.orm.default_entity_manager" />
-        </service>
+        <service id="kematjaya.doctine_manager" alias="Kematjaya\ItemPack\Service\DoctrineManager" public="true"></service> 
+        
+        <service id="Kematjaya\ItemPack\Service\PriceService" class="Kematjaya\ItemPack\Service\PriceService"></service>
+        <service id="Kematjaya\ItemPack\Service\StockService" class="Kematjaya\ItemPack\Service\StockService"></service>
         <service id="kematjaya.price_service" alias="Kematjaya\ItemPack\Service\PriceService" public="true"></service>
         <service id="kematjaya.stock_service" alias="Kematjaya\ItemPack\Service\StockService" public="true"></service>
     </services>
