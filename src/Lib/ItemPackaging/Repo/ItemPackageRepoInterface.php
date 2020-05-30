@@ -13,4 +13,6 @@ interface ItemPackageRepoInterface extends ObjectRepository
     
     public function createPackage(ItemInterface $item):ItemPackageInterface;
     
+    public function save(ItemPackageInterface $itemPackage): void;
+    
 }

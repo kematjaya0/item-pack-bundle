@@ -10,4 +10,6 @@ use Doctrine\Common\Persistence\ObjectRepository;
 interface PackagingRepoInterface extends ObjectRepository 
 {
     public function createPackaging():PackagingInterface;
+    
+    public function save(PackagingInterface $package): void;
 }

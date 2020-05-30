@@ -3,6 +3,7 @@
 namespace Kematjaya\ItemPack\Service;
 
 
+use Kematjaya\ItemPack\Lib\Item\Repo\ItemRepoInterface;
 use Kematjaya\ItemPack\Service\StockServiceInterface;
 use Kematjaya\ItemPack\Lib\Packaging\Entity\PackagingInterface;
 use Kematjaya\ItemPack\Lib\Item\Entity\ItemInterface;
@@ -12,6 +13,13 @@ use Kematjaya\ItemPack\Lib\ItemPackaging\Entity\ItemPackageInterface;
  */
 class StockService implements StockServiceInterface
 {   
+    protected $itemRepo;
+    
+    public function __construct(ItemRepoInterface $itemRepo) 
+    {
+        $this->itemRepo = $itemRepo;
+    }
+    
     protected function getItemPackByPackagingOrSmallestUnit(ItemInterface $item, PackagingInterface $packaging = null):?ItemPackageInterface
     {
         return $item->getItemPackages()->filter(function (ItemPackageInterface $itemPackage) use ($packaging) {
@@ -59,6 +67,9 @@ class StockService implements StockServiceInterface
         
         $lastStock = $item->getLastStock() + $quantity;
         $item->setLastStock($lastStock);
+        
+        $this->itemRepo->save($item);
+        
         return $item;
     }
     
@@ -73,6 +84,9 @@ class StockService implements StockServiceInterface
         
         $lastStock = $item->getLastStock() - $quantity;
         $item->setLastStock($lastStock);
+        
+        $this->itemRepo->save($item);
+        
         return $item;
     }
 }

@@ -11,4 +11,6 @@ interface ItemRepoInterface extends ObjectRepository
 {
     
     public function createItem():ItemInterface;
+    
+    public function save(ItemInterface $item):void;
 }

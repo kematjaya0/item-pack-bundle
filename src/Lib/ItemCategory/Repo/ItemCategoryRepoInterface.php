@@ -11,4 +11,7 @@ use Doctrine\Common\Persistence\ObjectRepository;
 interface ItemCategoryRepoInterface extends ObjectRepository
 {
     public function createItemCategory():ItemCategoryInterface;
+    
+    public function save(ItemCategoryInterface $itemPackage): void;
+    
 }
