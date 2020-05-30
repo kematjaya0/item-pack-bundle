@@ -15,7 +15,10 @@
         <service id="kematjaya.package_repository" alias="Kematjaya\ItemPack\Lib\Packaging\Repo\PackagingRepoInterface" public="true"></service>
         <service id="kematjaya.item_category_repository" alias="Kematjaya\ItemPack\Lib\ItemCategory\Repo\ItemCategoryRepoInterface" public="true"></service>
         
-        <service id="Kematjaya\ItemPack\Service\PriceService" class="Kematjaya\ItemPack\Service\PriceService"></service>
+        <service id="Kematjaya\ItemPack\Service\PriceService" class="Kematjaya\ItemPack\Service\PriceService">
+            <argument type="service" id="kematjaya.item_repository" />
+            <argument type="service" id="kematjaya.item_package_repository" />
+        </service>
         <service id="Kematjaya\ItemPack\Service\StockService" class="Kematjaya\ItemPack\Service\StockService">
             <argument type="service" id="kematjaya.item_repository" />
         </service>

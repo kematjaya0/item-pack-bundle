@@ -2,7 +2,6 @@
 
 namespace Kematjaya\ItemPack\Service;
 
-
 use Kematjaya\ItemPack\Lib\Item\Repo\ItemRepoInterface;
 use Kematjaya\ItemPack\Service\StockServiceInterface;
 use Kematjaya\ItemPack\Lib\Packaging\Entity\PackagingInterface;
@@ -15,20 +14,11 @@ class StockService implements StockServiceInterface
 {   
     protected $itemRepo;
     
+    use Service;
+    
     public function __construct(ItemRepoInterface $itemRepo) 
     {
         $this->itemRepo = $itemRepo;
-    }
-    
-    protected function getItemPackByPackagingOrSmallestUnit(ItemInterface $item, PackagingInterface $packaging = null):?ItemPackageInterface
-    {
-        return $item->getItemPackages()->filter(function (ItemPackageInterface $itemPackage) use ($packaging) {
-            if($packaging)
-            {
-                return $packaging->getCode() === $itemPackage->getPackaging()->getCode();
-            }
-            return $itemPackage->isSmallestUnit();
-        })->first();
     }
     
     /**

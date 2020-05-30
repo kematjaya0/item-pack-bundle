@@ -6,23 +6,31 @@ use Kematjaya\ItemPack\Service\PriceServiceInterface;
 use Kematjaya\ItemPack\Lib\Item\Entity\ItemInterface;
 use Kematjaya\ItemPack\Lib\Packaging\Entity\PackagingInterface;
 use Kematjaya\ItemPack\Lib\ItemPackaging\Entity\ItemPackageInterface;
-use Doctrine\Common\Collections\Collection;
-use Doctrine\Common\Collections\ArrayCollection;
+use Kematjaya\ItemPack\Lib\Item\Repo\ItemRepoInterface;
+use Kematjaya\ItemPack\Lib\ItemPackaging\Repo\ItemPackageRepoInterface;
 /**
  * @author Nur Hidayatullah <kematjaya0@gmail.com>
  */
 class PriceService implements PriceServiceInterface
 {
-    public function updatePrincipalPrice(ItemInterface $item, float $price = 0, PackagingInterface $packaging = null):Collection
+    use Service;
+    
+    protected $itemRepo, $itemPackageRepo;
+    
+    public function __construct(ItemRepoInterface $itemRepo, ItemPackageRepoInterface $itemPackageRepo) 
     {
-        $itemPack = $item->getItemPackages()->filter(function (ItemPackageInterface $itemPackage) use ($packaging) {
-            if($packaging)
-            {
-                return $packaging->getCode() === $itemPackage->getPackaging()->getCode();
-            }
-            return $itemPackage->isSmallestUnit();
-        })->first();
+        $this->itemRepo = $itemRepo;
+        $this->itemPackageRepo = $itemPackageRepo;
+    }
+    
+    public function updatePrincipalPrice(ItemInterface $item, float $price = 0, PackagingInterface $packaging = null):ItemInterface
+    {
+        if($item->getItemPackages()->isEmpty())
+        {
+            throw new \Exception('item package is empty');
+        }
         
+        $itemPack = $this->getItemPackByPackagingOrSmallestUnit($item, $packaging);
         
         if($itemPack instanceof ItemPackageInterface)
         {
@@ -31,26 +39,22 @@ class PriceService implements PriceServiceInterface
             {
                 $item->setPrincipalPrice($price);
             }
+            
+            $this->itemPackageRepo->save($itemPack);
         }
         
-        return new ArrayCollection([$itemPack, $item]);
+        $this->itemRepo->save($item);
+        return $item;
     }
     
-    public function updateSalePrice(ItemInterface $item, float $price = 0, PackagingInterface $packaging = null):Collection
+    public function updateSalePrice(ItemInterface $item, float $price = 0, PackagingInterface $packaging = null):ItemInterface
     {
         if($item->getItemPackages()->isEmpty())
         {
             throw new \Exception('item package is empty');
         }
         
-        $itemPack = $item->getItemPackages()->filter(function (ItemPackageInterface $itemPackage) use ($packaging) {
-            if($packaging)
-            {
-                return $packaging->getCode() === $itemPackage->getPackaging()->getCode();
-            }
-            return $itemPackage->isSmallestUnit();
-        })->first();
-        
+        $itemPack = $this->getItemPackByPackagingOrSmallestUnit($item, $packaging);
         
         if($itemPack instanceof ItemPackageInterface)
         {
@@ -59,8 +63,12 @@ class PriceService implements PriceServiceInterface
             {
                 $item->setLastPrice($price);
             }
+            
+            $this->itemPackageRepo->save($itemPack);
         }
         
-        return new ArrayCollection([$itemPack, $item]);
+        $this->itemRepo->save($item);
+        
+        return $item;
     }
 }
