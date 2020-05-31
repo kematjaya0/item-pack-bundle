@@ -5,11 +5,6 @@
     <services>
         <defaults public="false" />
         
-        <service id="Kematjaya\ItemPack\Service\DoctrineManager" class="Kematjaya\ItemPack\Service\DoctrineManager">
-            <argument type="service" id="doctrine.orm.default_entity_manager" />
-        </service>
-        <service id="kematjaya.doctine_manager" alias="Kematjaya\ItemPack\Service\DoctrineManager" public="true"></service> 
-        
         <service id="kematjaya.item_package_repository" alias="Kematjaya\ItemPack\Lib\ItemPackaging\Repo\ItemPackageRepoInterface" public="true"></service>
         <service id="kematjaya.item_repository" alias="Kematjaya\ItemPack\Lib\Item\Repo\ItemRepoInterface" public="true"></service>
         <service id="kematjaya.package_repository" alias="Kematjaya\ItemPack\Lib\Packaging\Repo\PackagingRepoInterface" public="true"></service>
