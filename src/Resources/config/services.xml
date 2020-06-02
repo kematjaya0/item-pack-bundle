@@ -9,6 +9,7 @@
         <service id="kematjaya.item_repository" alias="Kematjaya\ItemPack\Lib\Item\Repo\ItemRepoInterface" public="true"></service>
         <service id="kematjaya.package_repository" alias="Kematjaya\ItemPack\Lib\Packaging\Repo\PackagingRepoInterface" public="true"></service>
         <service id="kematjaya.item_category_repository" alias="Kematjaya\ItemPack\Lib\ItemCategory\Repo\ItemCategoryRepoInterface" public="true"></service>
+        <service id="kematjaya.stock_card_repository" alias="Kematjaya\ItemPack\Lib\Stock\Repo\StockCardRepoInterface" public="true"></service>
         
         <service id="Kematjaya\ItemPack\Service\PriceService" class="Kematjaya\ItemPack\Service\PriceService">
             <argument type="service" id="kematjaya.item_repository" />
@@ -17,7 +18,11 @@
         <service id="Kematjaya\ItemPack\Service\StockService" class="Kematjaya\ItemPack\Service\StockService">
             <argument type="service" id="kematjaya.item_repository" />
         </service>
+        <service id="Kematjaya\ItemPack\Service\StockCardService" class="Kematjaya\ItemPack\Service\StockCardService">
+            <argument type="service" id="kematjaya.stock_card_repository" />
+        </service>
         <service id="kematjaya.price_service" alias="Kematjaya\ItemPack\Service\PriceService" public="true"></service>
         <service id="kematjaya.stock_service" alias="Kematjaya\ItemPack\Service\StockService" public="true"></service>
+        <service id="kematjaya.stock_card_service" alias="Kematjaya\ItemPack\Service\StockCardService" public="true"></service>
     </services>
 </container>

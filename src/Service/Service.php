@@ -12,6 +12,10 @@ trait Service
 {
     protected function getItemPackByPackagingOrSmallestUnit(ItemInterface $item, PackagingInterface $packaging = null):?ItemPackageInterface
     {
+        if($item->getItemPackages()->isEmpty())
+        {
+            throw new \Exception('item package is empty');
+        }
         return $item->getItemPackages()->filter(function (ItemPackageInterface $itemPackage) use ($packaging) {
             if($packaging)
             {
