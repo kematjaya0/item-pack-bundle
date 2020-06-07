@@ -8,19 +8,27 @@ use Kematjaya\ItemPack\Lib\Packaging\Entity\PackagingInterface;
 use Kematjaya\ItemPack\Lib\ItemPackaging\Entity\ItemPackageInterface;
 use Kematjaya\ItemPack\Lib\Item\Repo\ItemRepoInterface;
 use Kematjaya\ItemPack\Lib\ItemPackaging\Repo\ItemPackageRepoInterface;
+use Kematjaya\ItemPack\Lib\Price\Repo\PriceLogRepoInterface;
+use Kematjaya\ItemPack\Lib\Price\Entity\PriceLogInterface;
+use Kematjaya\ItemPack\Lib\Price\Entity\PriceLogClientInterface;
+use Kematjaya\ItemPack\Service\PriceLogServiceInterface;
 /**
  * @author Nur Hidayatullah <kematjaya0@gmail.com>
  */
-class PriceService implements PriceServiceInterface
+class PriceService implements PriceServiceInterface, PriceLogServiceInterface
 {
     use Service;
     
-    protected $itemRepo, $itemPackageRepo;
+    protected $itemRepo, $itemPackageRepo, $priceLogRepo;
     
-    public function __construct(ItemRepoInterface $itemRepo, ItemPackageRepoInterface $itemPackageRepo) 
+    public function __construct(
+        ItemRepoInterface $itemRepo, 
+        ItemPackageRepoInterface $itemPackageRepo,
+        PriceLogRepoInterface $priceLogRepo) 
     {
         $this->itemRepo = $itemRepo;
         $this->itemPackageRepo = $itemPackageRepo;
+        $this->priceLogRepo = $priceLogRepo;
     }
     
     public function updatePrincipalPrice(ItemInterface $item, float $price = 0, PackagingInterface $packaging = null):ItemInterface
@@ -45,6 +53,64 @@ class PriceService implements PriceServiceInterface
         
         $this->itemRepo->save($item);
         return $item;
+    }
+    
+    /**
+     * Save Price if Principal Price != Old Principal Price
+     * @param ItemInterface $item
+     * @param float $price
+     * @return PriceLogInterface|null
+     */
+    public function saveNewPrice(ItemInterface $item, float $price = 0):?PriceLogInterface
+    {
+        if($item instanceof PriceLogClientInterface)
+        {
+            if($price !== $item->getPrincipalPrice())
+            {
+                $priceLog = $this->priceLogRepo->createPriceLog($item);
+                $priceLog->setStatus(PriceLogInterface::STATUS_NEW)
+                        ->setPrincipalPrice($price)
+                        ->setSalePrice($price);
+                if($item->getActivePrincipalPrice())
+                {
+                    $priceLog->setPrincipalPriceOld($item->getActivePrincipalPrice());
+                }
+                if($item->getActiveSalePrice())
+                {
+                    $priceLog->setSalePriceOld($item->getActiveSalePrice());
+                }
+
+                $this->priceLogRepo->save($priceLog);
+
+                return $priceLog;
+            }
+        }
+            
+        
+        return null;
+    }
+    
+    public function approvePrice(PriceLogInterface $priceLog):PriceLogClientInterface
+    {
+        $item = $priceLog->getItem();
+        $item->setPrincipalPrice($priceLog->getPrincipalPrice());
+        $item->setLastPrice($priceLog->getSalePrice());
+        
+        $priceLog->setStatus(PriceLogInterface::STATUS_APPROVED);
+        
+        $this->priceLogRepo->save($priceLog);
+        $this->itemRepo->save($item);
+        
+        return $item;
+    }
+    
+    public function rejectPrice(PriceLogInterface $priceLog):PriceLogInterface
+    {
+        $priceLog->setStatus(PriceLogInterface::STATUS_REJECTED);
+        
+        $this->priceLogRepo->save($priceLog);
+        
+        return $priceLog;
     }
     
     public function updateSalePrice(ItemInterface $item, float $price = 0, PackagingInterface $packaging = null):ItemInterface

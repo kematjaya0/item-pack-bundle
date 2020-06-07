@@ -12,4 +12,5 @@ interface PriceServiceInterface
     public function updatePrincipalPrice(ItemInterface $item, float $price = 0, PackagingInterface $packaging = null):ItemInterface;
     
     public function updateSalePrice(ItemInterface $item, float $price = 0, PackagingInterface $packaging = null):ItemInterface;
+    
 }
