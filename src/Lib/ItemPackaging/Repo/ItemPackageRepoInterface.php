@@ -15,4 +15,6 @@ interface ItemPackageRepoInterface extends ObjectRepository
     
     public function save(ItemPackageInterface $itemPackage): void;
     
+    public function findSmallestUnitByItem(ItemInterface $item):?ItemPackageInterface;
+    
 }

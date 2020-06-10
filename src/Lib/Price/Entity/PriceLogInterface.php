@@ -12,6 +12,12 @@ interface PriceLogInterface
     const STATUS_APPROVED = 2;
     const STATUS_REJECTED = 0;
     
+    public function isNew():bool;
+    
+    public function isApproved():bool;
+    
+    public function isRejected():bool;
+    
     public function setItem(ItemInterface $item):self;
     
     public function getItem():?ItemInterface;
