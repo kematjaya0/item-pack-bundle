@@ -23,8 +23,19 @@
         <service id="Kematjaya\ItemPack\Service\StockCardService" class="Kematjaya\ItemPack\Service\StockCardService">
             <argument type="service" id="kematjaya.stock_card_repository" />
         </service>
+        <service id="Kematjaya\ItemPack\Lib\ItemPackaging\Event\ItemPackageFormSubscriber" class="Kematjaya\ItemPack\Lib\ItemPackaging\Event\ItemPackageFormSubscriber">
+            <argument type="service" id="kematjaya.item_package_repository" />
+        </service>
+        
+        <service id="kematjaya.item_package_form_subscriber" alias="Kematjaya\ItemPack\Lib\ItemPackaging\Event\ItemPackageFormSubscriber" public="true"></service>
         <service id="kematjaya.price_service" alias="Kematjaya\ItemPack\Service\PriceService" public="true"></service>
         <service id="kematjaya.stock_service" alias="Kematjaya\ItemPack\Service\StockService" public="true"></service>
         <service id="kematjaya.stock_card_service" alias="Kematjaya\ItemPack\Service\StockCardService" public="true"></service>
+        
+        <service id="Kematjaya\ItemPack\Lib\Price\Event\PriceLogEventSubscriber" class="Kematjaya\ItemPack\Lib\Price\Event\PriceLogEventSubscriber">
+            <argument type="service" id="kematjaya.price_service" />
+            <tag name="doctrine.event_listener" event="onFlush"/>
+        </service>
+        
     </services>
 </container>
