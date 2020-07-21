@@ -50,6 +50,11 @@ class ItemEventSubscriber implements EventSubscriberInterface
                 $item->setLastStock(0);
             }
             
+            if($item->getUseBarcode() == false)
+            {
+                $item->setUseBarcode(false);
+            }
+            
             $event->setData($item);
         }
     }

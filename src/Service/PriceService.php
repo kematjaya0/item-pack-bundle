@@ -3,6 +3,8 @@
 namespace Kematjaya\ItemPack\Service;
 
 use Kematjaya\ItemPack\Service\PriceServiceInterface;
+use Kematjaya\ItemPack\Service\PriceLogServiceInterface;
+use Kematjaya\ItemPack\Event\PriceInterface;
 use Kematjaya\ItemPack\Lib\Item\Entity\ItemInterface;
 use Kematjaya\ItemPack\Lib\Packaging\Entity\PackagingInterface;
 use Kematjaya\ItemPack\Lib\ItemPackaging\Entity\ItemPackageInterface;
@@ -11,7 +13,7 @@ use Kematjaya\ItemPack\Lib\ItemPackaging\Repo\ItemPackageRepoInterface;
 use Kematjaya\ItemPack\Lib\Price\Repo\PriceLogRepoInterface;
 use Kematjaya\ItemPack\Lib\Price\Entity\PriceLogInterface;
 use Kematjaya\ItemPack\Lib\Price\Entity\PriceLogClientInterface;
-use Kematjaya\ItemPack\Service\PriceLogServiceInterface;
+
 /**
  * @author Nur Hidayatullah <kematjaya0@gmail.com>
  */
@@ -19,16 +21,18 @@ class PriceService implements PriceServiceInterface, PriceLogServiceInterface
 {
     use Service;
     
-    protected $itemRepo, $itemPackageRepo, $priceLogRepo;
+    protected $itemRepo, $itemPackageRepo, $priceLogRepo, $priceEvent;
     
     public function __construct(
         ItemRepoInterface $itemRepo, 
         ItemPackageRepoInterface $itemPackageRepo,
-        PriceLogRepoInterface $priceLogRepo) 
+        PriceLogRepoInterface $priceLogRepo, 
+        PriceInterface $priceEvent) 
     {
         $this->itemRepo = $itemRepo;
         $this->itemPackageRepo = $itemPackageRepo;
         $this->priceLogRepo = $priceLogRepo;
+        $this->priceEvent = $priceEvent;
     }
     
     public function updatePrincipalPrice(ItemInterface $item, float $price = 0, PackagingInterface $packaging = null):ItemInterface
@@ -81,7 +85,8 @@ class PriceService implements PriceServiceInterface, PriceLogServiceInterface
                 }
 
                 $this->priceLogRepo->save($priceLog);
-
+                $this->priceEvent->onChangePrincipalPrice($priceLog);
+                
                 return $priceLog;
             }
         }
