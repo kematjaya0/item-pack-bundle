@@ -85,7 +85,7 @@ class PriceService implements PriceServiceInterface, PriceLogServiceInterface
                 }
 
                 $this->priceLogRepo->save($priceLog);
-                $this->priceEvent->onChangePrincipalPrice($priceLog);
+                $this->priceEvent->onNewPrincipalPrice($priceLog);
                 
                 return $priceLog;
             }
@@ -105,7 +105,7 @@ class PriceService implements PriceServiceInterface, PriceLogServiceInterface
         
         $this->priceLogRepo->save($priceLog);
         
-		$this->priceEvent->onChangePrincipalPrice($priceLog);
+		$this->priceEvent->onApprovalPrincipalPrice($priceLog);
 		
 		$this->itemRepo->save($item);
         
@@ -118,7 +118,7 @@ class PriceService implements PriceServiceInterface, PriceLogServiceInterface
         
         $this->priceLogRepo->save($priceLog);
         
-		$this->priceEvent->onChangePrincipalPrice($priceLog);
+		$this->priceEvent->onRejectPrincipalPrice($priceLog);
 		
         return $priceLog;
     }

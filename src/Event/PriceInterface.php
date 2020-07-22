@@ -7,5 +7,9 @@ use Kematjaya\ItemPack\Lib\Price\Entity\PriceLogInterface;
  */
 interface PriceInterface 
 {
-    public function onChangePrincipalPrice(PriceLogInterface $priceLog):void;
+    public function onNewPrincipalPrice(PriceLogInterface $priceLog):void;
+	
+	public function onApprovalPrincipalPrice(PriceLogInterface $priceLog):void;
+	
+	public function onRejectPrincipalPrice(PriceLogInterface $priceLog):void;
 }
