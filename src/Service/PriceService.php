@@ -104,7 +104,10 @@ class PriceService implements PriceServiceInterface, PriceLogServiceInterface
         $priceLog->setStatus(PriceLogInterface::STATUS_APPROVED);
         
         $this->priceLogRepo->save($priceLog);
-        $this->itemRepo->save($item);
+        
+		$this->priceEvent->onChangePrincipalPrice($priceLog);
+		
+		$this->itemRepo->save($item);
         
         return $item;
     }
@@ -115,6 +118,8 @@ class PriceService implements PriceServiceInterface, PriceLogServiceInterface
         
         $this->priceLogRepo->save($priceLog);
         
+		$this->priceEvent->onChangePrincipalPrice($priceLog);
+		
         return $priceLog;
     }
     
