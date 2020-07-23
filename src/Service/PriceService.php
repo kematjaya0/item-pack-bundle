@@ -101,24 +101,20 @@ class PriceService implements PriceServiceInterface, PriceLogServiceInterface
         $item->setPrincipalPrice($priceLog->getPrincipalPrice());
         $item->setLastPrice($priceLog->getSalePrice());
         
-        $priceLog->setStatus(PriceLogInterface::STATUS_APPROVED);
-        
         $this->priceLogRepo->save($priceLog);
         
-		$this->priceEvent->onApprovalPrincipalPrice($priceLog);
-		
-		$this->itemRepo->save($item);
+        $this->priceEvent->onApprovalPrincipalPrice($priceLog);
+
+        $this->itemRepo->save($item);
         
         return $item;
     }
     
     public function rejectPrice(PriceLogInterface $priceLog):PriceLogInterface
     {
-        $priceLog->setStatus(PriceLogInterface::STATUS_REJECTED);
-        
         $this->priceLogRepo->save($priceLog);
         
-		$this->priceEvent->onRejectPrincipalPrice($priceLog);
+        $this->priceEvent->onRejectPrincipalPrice($priceLog);
 		
         return $priceLog;
     }
