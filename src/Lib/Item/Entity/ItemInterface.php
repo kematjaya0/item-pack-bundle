@@ -9,7 +9,7 @@ use Kematjaya\ItemPack\Lib\ItemCategory\Entity\ItemCategoryInterface;
  */
 interface ItemInterface 
 {
-    public function getId(): ?int;
+    public function getId(): ?\Ramsey\Uuid\UuidInterface;
 
     public function getCode(): ?string;
 

@@ -9,7 +9,7 @@ namespace Kematjaya\ItemPack\Lib\Stock\Entity;
 interface ClientStockCardInterface 
 {
     
-    public function getId():?int;
+    public function getId():?\Ramsey\Uuid\UuidInterface;
     
     public function getTypeTransaction():string;
     

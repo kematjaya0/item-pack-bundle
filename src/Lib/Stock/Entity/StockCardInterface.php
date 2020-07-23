@@ -23,9 +23,9 @@ interface StockCardInterface
     
     public function setClassName(string $class_name):self;
     
-    public function getClassId():int;
+    public function getClassId(): \Ramsey\Uuid\UuidInterface;
     
-    public function setClassId(int $class_id):self;
+    public function setClassId(\Ramsey\Uuid\UuidInterface $class_id):self;
     
     public function getQuantity(): float;
     
