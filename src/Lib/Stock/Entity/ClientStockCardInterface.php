@@ -2,6 +2,7 @@
 
 namespace Kematjaya\ItemPack\Lib\Stock\Entity;
 
+use Ramsey\Uuid\UuidInterface;
 
 /**
  * @author Nur Hidayatullah <kematjaya0@gmail.com>
@@ -9,7 +10,7 @@ namespace Kematjaya\ItemPack\Lib\Stock\Entity;
 interface ClientStockCardInterface 
 {
     
-    public function getId():?int;
+    public function getId():?UuidInterface;
     
     public function getTypeTransaction():string;
     
