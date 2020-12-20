@@ -19,8 +19,7 @@ class ItemcategoryFixtures extends Fixture
     
     public function load(ObjectManager $manager) 
     {
-        for ($i = 0; $i < 20; $i++)
-        {
+        for ($i = 0; $i < 20; $i++) {
             $object = $this->itemCategoryRepo->createItemCategory();
             $object->setName('test - ' . $i)
                 ->setCode($i)

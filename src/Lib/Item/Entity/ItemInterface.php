@@ -2,7 +2,6 @@
 
 namespace Kematjaya\ItemPack\Lib\Item\Entity;
 
-use Ramsey\Uuid\UuidInterface;
 use Doctrine\Common\Collections\Collection;
 use Kematjaya\ItemPack\Lib\ItemCategory\Entity\ItemCategoryInterface;
 /**
@@ -10,8 +9,6 @@ use Kematjaya\ItemPack\Lib\ItemCategory\Entity\ItemCategoryInterface;
  */
 interface ItemInterface 
 {
-    public function getId(): ?UuidInterface;
-
     public function getCode(): ?string;
 
     public function setCode(string $code): self;

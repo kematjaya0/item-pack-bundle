@@ -30,34 +30,31 @@ class ItemPackageFormSubscriber implements EventSubscriberInterface
     public function postSubmit(FormEvent $event)
     {
         $data = $event->getData();
-        if($data instanceof ItemPackageInterface)
-        {
-            $form = $event->getForm();
-            if($data->isSmallestUnit())
-            {
-                $smallestUnit = $this->itemPackageRepo->findSmallestUnitByItem($data->getItem());
-                if($smallestUnit and $smallestUnit->getId() !== $data->getId())
-                {
-                    $form->addError(new FormError('kemasan terkecil tidak boleh lebih dari 1'));
-                    return false;
-                }
-
-                $data->setQuantity(1);
-            }else
-            {
-                $data->setIsSmallestUnit(false);
-            }
-
-            if($data->getPrincipalPrice())
-            {
-                $data->setPrincipalPrice(0);
-            }
-            if($data->getSalePrice())
-            {
-                $data->setSalePrice(0);
-            }
-
-            $event->setData($data);
+        if(!$data instanceof ItemPackageInterface) {
+            return;
         }   
+        
+        $form = $event->getForm();
+        if($data->isSmallestUnit()) {
+            $smallestUnit = $this->itemPackageRepo->findSmallestUnitByItem($data->getItem());
+            if($smallestUnit and $smallestUnit->getId() !== $data->getId()) {
+                $form->addError(new FormError('kemasan terkecil tidak boleh lebih dari 1'));
+                return false;
+            }
+
+            $data->setQuantity(1);
+        }else {
+            $data->setIsSmallestUnit(false);
+        }
+
+        if($data->getPrincipalPrice()) {
+            $data->setPrincipalPrice(0);
+        }
+        
+        if($data->getSalePrice()) {
+            $data->setSalePrice(0);
+        }
+
+        $event->setData($data);
     }
 }

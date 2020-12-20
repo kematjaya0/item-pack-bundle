@@ -9,7 +9,7 @@ interface PriceInterface
 {
     public function onNewPrincipalPrice(PriceLogInterface $priceLog):void;
 	
-	public function onApprovalPrincipalPrice(PriceLogInterface $priceLog):void;
+    public function onApprovalPrincipalPrice(PriceLogInterface $priceLog):void;
 	
-	public function onRejectPrincipalPrice(PriceLogInterface $priceLog):void;
+    public function onRejectPrincipalPrice(PriceLogInterface $priceLog):void;
 }

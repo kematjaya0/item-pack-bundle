@@ -42,7 +42,7 @@ class StockCardService implements StockCardServiceInterface
                 ->setType($entity->getTypeTransaction())
                 ->setTotal($item->getLastStock())
                 ->setClassName(get_class($entity))
-                ->setClassId($entity->getId());
+                ->setClassId($entity->getClassId());
         
         $this->stockCardRepo->save($stockCard);
         

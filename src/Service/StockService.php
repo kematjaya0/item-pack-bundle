@@ -12,9 +12,13 @@ use Kematjaya\ItemPack\Lib\ItemPackaging\Entity\ItemPackageInterface;
  */
 class StockService implements StockServiceInterface
 {   
+    /**
+     * 
+     * @var ItemRepoInterface
+     */
     protected $itemRepo;
     
-    use Service;
+    use ServiceTrait;
     
     public function __construct(ItemRepoInterface $itemRepo) 
     {
@@ -30,6 +34,7 @@ class StockService implements StockServiceInterface
      */
     public function updateStock(ItemInterface $item, float $quantity = 0, PackagingInterface $packaging = null):ItemInterface
     {
+        trigger_deprecation(self::class, "1.2", "test");
         $itemPack = $item->getItemPackages()->filter(function (ItemPackageInterface $itemPackage) use ($packaging) {
             if($packaging)
             {
@@ -38,8 +43,7 @@ class StockService implements StockServiceInterface
             return $itemPackage->isSmallestUnit();
         })->first();
         
-        if($itemPack instanceof ItemPackageInterface)
-        {
+        if($itemPack instanceof ItemPackageInterface) {
             $quantity = $quantity * $itemPack->getQuantity();
         }
         
@@ -50,8 +54,7 @@ class StockService implements StockServiceInterface
     {
         $itemPack = $this->getItemPackByPackagingOrSmallestUnit($item, $packaging);
         
-        if($itemPack instanceof ItemPackageInterface)
-        {
+        if($itemPack instanceof ItemPackageInterface) {
             $quantity = ($itemPack->isSmallestUnit()) ? $quantity : $quantity * $itemPack->getQuantity();
         }
         
@@ -67,8 +70,7 @@ class StockService implements StockServiceInterface
     {
         $itemPack = $this->getItemPackByPackagingOrSmallestUnit($item, $packaging);
         
-        if($itemPack instanceof ItemPackageInterface)
-        {
+        if($itemPack instanceof ItemPackageInterface) {
             $quantity = ($itemPack->isSmallestUnit()) ? $quantity : $quantity * $itemPack->getQuantity();
         }
         

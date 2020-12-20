@@ -23,39 +23,39 @@ class ItemEventSubscriber implements EventSubscriberInterface
     public function preSetData(FormEvent $event)
     {
         $item = $event->getData();
-        if($item instanceof ItemInterface)
-        {
-            $event->getForm()->add('last_stock', null, [
-                'label' => 'last_stock',
-                'attr' => ['class' => 'form-control', 'readonly' => true]
-            ]);
-            if(!$item->getId())
-            {
-                $item->setUseBarcode(false);
-            }
+        if(!$item instanceof ItemInterface) {
             
-            $event->setData($item);
+            return;
         }
+        
+        $event->getForm()->add('last_stock', null, [
+            'label' => 'last_stock',
+            'attr' => ['class' => 'form-control', 'readonly' => true]
+        ]);
+        if(!$item->getId()) {
+            $item->setUseBarcode(false);
+        }
+
+        $event->setData($item);
     }
     
     public function postSubmit(FormEvent $event)
     {
         $item = $event->getData();
-        if($item instanceof ItemInterface)
-        {
-            $item->setCode(trim($item->getCode()));
-            $item->setName(trim($item->getName()));
-            if(is_null($item->getLastStock()))
-            {
-                $item->setLastStock(0);
-            }
-            
-            if($item->getUseBarcode() == false)
-            {
-                $item->setUseBarcode(false);
-            }
-            
-            $event->setData($item);
+        if($item instanceof ItemInterface) {
+            return;
         }
+        
+        $item->setCode(trim($item->getCode()));
+        $item->setName(trim($item->getName()));
+        if(is_null($item->getLastStock())) {
+            $item->setLastStock(0);
+        }
+
+        if($item->getUseBarcode() == false) {
+            $item->setUseBarcode(false);
+        }
+
+        $event->setData($item);
     }
 }

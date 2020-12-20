@@ -1,0 +1,11 @@
+framework:
+    test: true
+
+services:
+    
+    Kematjaya\ItemPack\Lib\Item\Repo\ItemRepoInterface:
+        class: Kematjaya\ItemPack\Tests\Repository\ItemRepository
+            
+    kematjaya.stock_service:
+        alias: Kematjaya\ItemPack\Service\StockServiceInterface
+        public: true

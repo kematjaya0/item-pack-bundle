@@ -19,6 +19,7 @@
             <argument type="service" id="kematjaya.price_log_repository" />
             <argument type="service" id="kematjaya.price_event" />
         </service>
+        
         <service id="Kematjaya\ItemPack\Service\StockService" class="Kematjaya\ItemPack\Service\StockService">
             <argument type="service" id="kematjaya.item_repository" />
         </service>

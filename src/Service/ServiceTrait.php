@@ -8,19 +8,19 @@ use Kematjaya\ItemPack\Lib\ItemPackaging\Entity\ItemPackageInterface;
 /**
  * @author Nur Hidayatullah <kematjaya0@gmail.com>
  */
-trait Service 
+trait ServiceTrait 
 {
     protected function getItemPackByPackagingOrSmallestUnit(ItemInterface $item, PackagingInterface $packaging = null):?ItemPackageInterface
     {
-        if($item->getItemPackages()->isEmpty())
-        {
+        if($item->getItemPackages()->isEmpty()) {
             throw new \Exception('item package is empty');
         }
+        
         return $item->getItemPackages()->filter(function (ItemPackageInterface $itemPackage) use ($packaging) {
-            if($packaging)
-            {
+            if($packaging) {
                 return $packaging->getCode() === $itemPackage->getPackaging()->getCode();
             }
+            
             return $itemPackage->isSmallestUnit();
         })->first();
     }

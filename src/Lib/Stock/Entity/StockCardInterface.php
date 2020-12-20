@@ -23,9 +23,9 @@ interface StockCardInterface
     
     public function setClassName(string $class_name):self;
     
-    public function getClassId():int;
+    public function getClassId():string;
     
-    public function setClassId(int $class_id):self;
+    public function setClassId(string $class_id):self;
     
     public function getQuantity(): float;
     
