@@ -5,7 +5,7 @@ use Kematjaya\ItemPack\Lib\Price\Entity\PriceLogInterface;
 /**
  * @author Nur Hidayatullah <kematjaya0@gmail.com>
  */
-interface PriceInterface 
+interface PriceEventInterface 
 {
     public function onNewPrincipalPrice(PriceLogInterface $priceLog):void;
 	

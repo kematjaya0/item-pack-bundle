@@ -9,10 +9,23 @@ services:
     Kematjaya\ItemPack\Lib\Stock\Repo\StockCardRepoInterface:
         class: Kematjaya\ItemPack\Tests\Repository\StockCardRepository
             
+    Kematjaya\ItemPack\Lib\ItemPackaging\Repo\ItemPackageRepoInterface:
+        class: Kematjaya\ItemPack\Tests\Repository\ItemPackageRepository
+            
+    Kematjaya\ItemPack\Lib\Price\Repo\PriceLogRepoInterface:
+        class: Kematjaya\ItemPack\Tests\Repository\PriceLogRepository
+        
+    Kematjaya\ItemPack\Event\PriceEventInterface:
+        class: Kematjaya\ItemPack\Tests\Model\PriceEvent
+            
     kematjaya.stock_service:
         alias: Kematjaya\ItemPack\Service\StockServiceInterface
         public: true
         
     kematjaya.stock_card_service:
         alias: Kematjaya\ItemPack\Service\StockCardServiceInterface
+        public: true
+        
+    kematjaya.price_service:
+        alias: Kematjaya\ItemPack\Service\PriceServiceInterface
         public: true

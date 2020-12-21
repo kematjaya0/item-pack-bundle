@@ -4,12 +4,11 @@ namespace Kematjaya\ItemPack\Lib\Price\Repo;
 
 use Kematjaya\ItemPack\Lib\Item\Entity\ItemInterface;
 use Kematjaya\ItemPack\Lib\Price\Entity\PriceLogInterface;
-use Doctrine\Common\Persistence\ObjectRepository;
 use Doctrine\Common\Collections\Collection;
 /**
  * @author Nur Hidayatullah <kematjaya0@gmail.com>
  */
-interface PriceLogRepoInterface extends ObjectRepository 
+interface PriceLogRepoInterface
 {
     
     public function createPriceLog(ItemInterface $item):PriceLogInterface;

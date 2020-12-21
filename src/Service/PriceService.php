@@ -4,7 +4,7 @@ namespace Kematjaya\ItemPack\Service;
 
 use Kematjaya\ItemPack\Service\PriceServiceInterface;
 use Kematjaya\ItemPack\Service\PriceLogServiceInterface;
-use Kematjaya\ItemPack\Event\PriceInterface;
+use Kematjaya\ItemPack\Event\PriceEventInterface;
 use Kematjaya\ItemPack\Lib\Item\Entity\ItemInterface;
 use Kematjaya\ItemPack\Lib\Packaging\Entity\PackagingInterface;
 use Kematjaya\ItemPack\Lib\ItemPackaging\Entity\ItemPackageInterface;
@@ -13,21 +13,41 @@ use Kematjaya\ItemPack\Lib\ItemPackaging\Repo\ItemPackageRepoInterface;
 use Kematjaya\ItemPack\Lib\Price\Repo\PriceLogRepoInterface;
 use Kematjaya\ItemPack\Lib\Price\Entity\PriceLogInterface;
 use Kematjaya\ItemPack\Lib\Price\Entity\PriceLogClientInterface;
+use Kematjaya\ItemPack\Exception\PackageEmptyException;
+use Kematjaya\ItemPack\Exception\SmallestPackageNotFoundException;
 
 /**
  * @author Nur Hidayatullah <kematjaya0@gmail.com>
  */
 class PriceService implements PriceServiceInterface, PriceLogServiceInterface
 {
-    use Service;
+    use ServiceTrait;
     
-    protected $itemRepo, $itemPackageRepo, $priceLogRepo, $priceEvent;
+    /**
+     * 
+     * @var ItemRepoInterface
+     */
+    private $itemRepo;
     
-    public function __construct(
-        ItemRepoInterface $itemRepo, 
-        ItemPackageRepoInterface $itemPackageRepo,
-        PriceLogRepoInterface $priceLogRepo, 
-        PriceInterface $priceEvent) 
+    /**
+     * 
+     * @var ItemPackageRepoInterface
+     */
+    private $itemPackageRepo;
+    
+    /**
+     * 
+     * @var PriceLogRepoInterface
+     */
+    private $priceLogRepo;
+    
+    /**
+     * 
+     * @var PriceEventInterface
+     */
+    private $priceEvent;
+    
+    public function __construct(ItemRepoInterface $itemRepo, ItemPackageRepoInterface $itemPackageRepo, PriceLogRepoInterface $priceLogRepo, PriceEventInterface $priceEvent) 
     {
         $this->itemRepo = $itemRepo;
         $this->itemPackageRepo = $itemPackageRepo;
@@ -35,27 +55,44 @@ class PriceService implements PriceServiceInterface, PriceLogServiceInterface
         $this->priceEvent = $priceEvent;
     }
     
-    public function updatePrincipalPrice(ItemInterface $item, float $price = 0, PackagingInterface $packaging = null):ItemInterface
+    public function updatePrincipalPrice(ItemInterface $item, PackagingInterface $packaging, float $price = 0):ItemInterface
     {
-        if($item->getItemPackages()->isEmpty())
-        {
-            throw new \Exception('item package is empty');
-        }
+        $this->validate($item);
         
         $itemPack = $this->getItemPackByPackagingOrSmallestUnit($item, $packaging);
         
-        if($itemPack instanceof ItemPackageInterface)
-        {
-            $itemPack->setPrincipalPrice($price);
-            if($itemPack->isSmallestUnit())
-            {
-                $item->setPrincipalPrice($price);
-            }
-            
-            $this->itemPackageRepo->save($itemPack);
+        if(!$itemPack instanceof ItemPackageInterface) {
+            throw new SmallestPackageNotFoundException($item);
         }
         
+        $itemPack->setPrincipalPrice($price);
+        if($itemPack->isSmallestUnit()) {
+            $item->setPrincipalPrice($price);
+        }
+
+        $this->itemPackageRepo->save($itemPack);
         $this->itemRepo->save($item);
+        
+        return $item;
+    }
+    
+    public function updateSalePrice(ItemInterface $item, PackagingInterface $packaging, float $price = 0):ItemInterface
+    {
+        $this->validate($item);
+        
+        $itemPack = $this->getItemPackByPackagingOrSmallestUnit($item, $packaging);
+        if(!$itemPack instanceof ItemPackageInterface) {
+            throw new SmallestPackageNotFoundException($item);
+        }
+        
+        $itemPack->setSalePrice($price);
+        if($itemPack->isSmallestUnit()) {
+            $item->setLastPrice($price);
+        }
+
+        $this->itemPackageRepo->save($itemPack);
+        $this->itemRepo->save($item);
+        
         return $item;
     }
     
@@ -119,28 +156,13 @@ class PriceService implements PriceServiceInterface, PriceLogServiceInterface
         return $priceLog;
     }
     
-    public function updateSalePrice(ItemInterface $item, float $price = 0, PackagingInterface $packaging = null):ItemInterface
+    protected function validate(ItemInterface $item):bool
     {
         if($item->getItemPackages()->isEmpty())
         {
-            throw new \Exception('item package is empty');
+            throw new PackageEmptyException(get_class($item));
         }
         
-        $itemPack = $this->getItemPackByPackagingOrSmallestUnit($item, $packaging);
-        
-        if($itemPack instanceof ItemPackageInterface)
-        {
-            $itemPack->setSalePrice($price);
-            if($itemPack->isSmallestUnit())
-            {
-                $item->setLastPrice($price);
-            }
-            
-            $this->itemPackageRepo->save($itemPack);
-        }
-        
-        $this->itemRepo->save($item);
-        
-        return $item;
+        return true;
     }
 }

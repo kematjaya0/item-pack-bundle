@@ -9,3 +9,6 @@ services:
         
     Kematjaya\ItemPack\Service\StockCardServiceInterface:
         class: Kematjaya\ItemPack\Service\StockCardService
+        
+    Kematjaya\ItemPack\Service\PriceServiceInterface:
+        class: Kematjaya\ItemPack\Service\PriceService

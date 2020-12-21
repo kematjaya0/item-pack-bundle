@@ -31,9 +31,14 @@ abstract class KmjItemPackBundleTest extends WebTestCase
         return $item;
     }
     
+    protected function buildPackaging(): Packaging
+    {
+        return (new Packaging())->setCode('pcs')->setName('PCS');
+    }
+    
     protected function buildItemPackage(Item $item):ItemPackage
     {
-        $packaging = (new Packaging())->setCode('pcs')->setName('PCS');
+        $packaging = $this->buildPackaging();
         
         return (new ItemPackage())
                 ->setItem($item)
