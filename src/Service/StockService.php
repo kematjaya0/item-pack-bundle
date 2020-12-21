@@ -2,6 +2,7 @@
 
 namespace Kematjaya\ItemPack\Service;
 
+use Kematjaya\ItemPack\Exception\NotSufficientStockException;
 use Kematjaya\ItemPack\Lib\Item\Repo\ItemRepoInterface;
 use Kematjaya\ItemPack\Service\StockServiceInterface;
 use Kematjaya\ItemPack\Lib\Packaging\Entity\PackagingInterface;
@@ -34,7 +35,6 @@ class StockService implements StockServiceInterface
      */
     public function updateStock(ItemInterface $item, float $quantity = 0, PackagingInterface $packaging = null):ItemInterface
     {
-        trigger_deprecation(self::class, "1.2", "test");
         $itemPack = $item->getItemPackages()->filter(function (ItemPackageInterface $itemPackage) use ($packaging) {
             if($packaging)
             {
@@ -75,6 +75,10 @@ class StockService implements StockServiceInterface
         }
         
         $lastStock = $item->getLastStock() - $quantity;
+        if($lastStock < 0) {
+            throw new NotSufficientStockException($item->getLastStock(), $quantity);
+        }
+        
         $item->setLastStock($lastStock);
         
         $this->itemRepo->save($item);

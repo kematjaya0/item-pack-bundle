@@ -12,7 +12,11 @@ interface ItemPackageInterface
     
     public function getItem():ItemInterface;
     
+    public function setItem(ItemInterface $item): self;
+    
     public function getPackaging():?PackagingInterface;
+    
+    public function setPackaging(PackagingInterface $packaging): self;
     
     public function setPrincipalPrice(float $price): self;
     

@@ -2,9 +2,11 @@
 
 namespace Kematjaya\ItemPack\Tests\Model;
 
+use Kematjaya\ItemPack\Lib\ItemPackaging\Entity\ItemPackageInterface;
 use Kematjaya\ItemPack\Lib\Item\Entity\ItemInterface;
 use Kematjaya\ItemPack\Lib\ItemCategory\Entity\ItemCategoryInterface;
 use Doctrine\Common\Collections\Collection;
+use Doctrine\Common\Collections\ArrayCollection;
 
 /**
  * @author Nur Hidayatullah <kematjaya0@gmail.com>
@@ -53,6 +55,17 @@ class Item implements ItemInterface
      */
     private $use_barcode;
     
+    /**
+     * 
+     * @var Collection
+     */
+    private $itemPackages;
+    
+    public function __construct() 
+    {
+        $this->itemPackages = new ArrayCollection();
+    }
+    
     public function getCategory(): ?ItemCategoryInterface 
     {
         return $this->category;
@@ -65,9 +78,27 @@ class Item implements ItemInterface
 
     public function getItemPackages(): Collection 
     {
-        return new \Doctrine\Common\Collections\ArrayCollection();
+        return $this->itemPackages;
     }
 
+    public function addItemPackage(ItemPackageInterface $itemPackage): self
+    {
+        if (!$this->itemPackages->contains($itemPackage)) {
+            $this->itemPackages[] = $itemPackage;
+        }
+
+        return $this;
+    }
+
+    public function removeItemPackage(ItemPackageInterface $itemPackage): self
+    {
+        if ($this->itemPackages->contains($itemPackage)) {
+            $this->itemPackages->removeElement($itemPackage);
+        }
+
+        return $this;
+    }
+    
     public function getLastPrice(): ?float 
     {
         return $this->last_price;
