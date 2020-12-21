@@ -2,6 +2,7 @@
 
 namespace Kematjaya\ItemPack\Tests\Model;
 
+use Kematjaya\ItemPack\Lib\Price\Entity\PriceLogClientInterface;
 use Kematjaya\ItemPack\Lib\ItemPackaging\Entity\ItemPackageInterface;
 use Kematjaya\ItemPack\Lib\Item\Entity\ItemInterface;
 use Kematjaya\ItemPack\Lib\ItemCategory\Entity\ItemCategoryInterface;
@@ -11,7 +12,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 /**
  * @author Nur Hidayatullah <kematjaya0@gmail.com>
  */
-class Item implements ItemInterface
+class Item implements ItemInterface, PriceLogClientInterface
 {
     /**
      * 
@@ -171,6 +172,26 @@ class Item implements ItemInterface
         $this->use_barcode = $use_barcode;
         
         return $this;
+    }
+
+    public function getActivePrincipalPrice(): ?float 
+    {
+        return $this->getPrincipalPrice();
+    }
+
+    public function getActiveSalePrice(): ?float 
+    {
+        return $this->getLastPrice();
+    }
+
+    public function setActivePrincipalPrice(float $price): PriceLogClientInterface 
+    {
+        return $this->setPrincipalPrice($price);
+    }
+
+    public function setActiveSalePrice(float $price): PriceLogClientInterface 
+    {
+        return $this->setLastPrice($price);
     }
 
 }

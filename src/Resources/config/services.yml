@@ -12,3 +12,6 @@ services:
         
     Kematjaya\ItemPack\Service\PriceServiceInterface:
         class: Kematjaya\ItemPack\Service\PriceService
+        
+    Kematjaya\ItemPack\Service\PriceLogServiceInterface:
+        class: Kematjaya\ItemPack\Service\PriceService

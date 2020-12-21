@@ -29,3 +29,7 @@ services:
     kematjaya.price_service:
         alias: Kematjaya\ItemPack\Service\PriceServiceInterface
         public: true
+        
+    kematjaya.price_log_service:
+        alias: Kematjaya\ItemPack\Service\PriceLogServiceInterface
+        public: true

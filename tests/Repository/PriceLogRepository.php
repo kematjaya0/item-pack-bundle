@@ -15,7 +15,9 @@ class PriceLogRepository implements PriceLogRepoInterface
     
     public function createPriceLog(ItemInterface $item): PriceLogInterface 
     {
+        $log = new \Kematjaya\ItemPack\Tests\Model\PriceLog();
         
+        return $log;
     }
 
     public function getNewPriceLogByItem(ItemInterface $item): ?PriceLogInterface 

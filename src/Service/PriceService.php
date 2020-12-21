@@ -104,32 +104,33 @@ class PriceService implements PriceServiceInterface, PriceLogServiceInterface
      */
     public function saveNewPrice(ItemInterface $item, float $price = 0):?PriceLogInterface
     {
-        if($item instanceof PriceLogClientInterface)
-        {
-            if($price !== $item->getPrincipalPrice())
-            {
-                $priceLog = $this->priceLogRepo->createPriceLog($item);
-                $priceLog->setStatus(PriceLogInterface::STATUS_NEW)
-                        ->setPrincipalPrice($price)
-                        ->setSalePrice($price);
-                if($item->getActivePrincipalPrice())
-                {
-                    $priceLog->setPrincipalPriceOld($item->getActivePrincipalPrice());
-                }
-                if($item->getActiveSalePrice())
-                {
-                    $priceLog->setSalePriceOld($item->getActiveSalePrice());
-                }
-
-                $this->priceLogRepo->save($priceLog);
-                $this->priceEvent->onNewPrincipalPrice($priceLog);
-                
-                return $priceLog;
-            }
+        if(!$item instanceof PriceLogClientInterface) {
+            return null;
         }
-            
         
-        return null;
+        if($price == $item->getPrincipalPrice()) {
+            return null;
+        }
+        
+        $priceLog = $this->priceLogRepo->createPriceLog($item);
+        $priceLog
+                ->setCreatedAt(new \DateTime())
+                ->setItem($item)
+                ->setStatus(PriceLogInterface::STATUS_NEW)
+                ->setPrincipalPrice($price)
+                ->setSalePrice($price);
+        if($item->getActivePrincipalPrice()) {
+            $priceLog->setPrincipalPriceOld($item->getActivePrincipalPrice());
+        }
+        
+        if($item->getActiveSalePrice()) {
+            $priceLog->setSalePriceOld($item->getActiveSalePrice());
+        }
+
+        $this->priceLogRepo->save($priceLog);
+        $this->priceEvent->onNewPrincipalPrice($priceLog);
+
+        return $priceLog;
     }
     
     public function approvePrice(PriceLogInterface $priceLog):PriceLogClientInterface
@@ -137,6 +138,8 @@ class PriceService implements PriceServiceInterface, PriceLogServiceInterface
         $item = $priceLog->getItem();
         $item->setPrincipalPrice($priceLog->getPrincipalPrice());
         $item->setLastPrice($priceLog->getSalePrice());
+        
+        $priceLog->setStatus(PriceLogInterface::STATUS_APPROVED);
         
         $this->priceLogRepo->save($priceLog);
         
@@ -149,6 +152,8 @@ class PriceService implements PriceServiceInterface, PriceLogServiceInterface
     
     public function rejectPrice(PriceLogInterface $priceLog):PriceLogInterface
     {
+        $priceLog->setStatus(PriceLogInterface::STATUS_REJECTED);
+        
         $this->priceLogRepo->save($priceLog);
         
         $this->priceEvent->onRejectPrincipalPrice($priceLog);
