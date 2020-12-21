@@ -6,6 +6,13 @@ services:
     Kematjaya\ItemPack\Lib\Item\Repo\ItemRepoInterface:
         class: Kematjaya\ItemPack\Tests\Repository\ItemRepository
             
+    Kematjaya\ItemPack\Lib\Stock\Repo\StockCardRepoInterface:
+        class: Kematjaya\ItemPack\Tests\Repository\StockCardRepository
+            
     kematjaya.stock_service:
         alias: Kematjaya\ItemPack\Service\StockServiceInterface
+        public: true
+        
+    kematjaya.stock_card_service:
+        alias: Kematjaya\ItemPack\Service\StockCardServiceInterface
         public: true

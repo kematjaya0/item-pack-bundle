@@ -10,5 +10,5 @@ use Kematjaya\ItemPack\Lib\Stock\Entity\StockCardInterface;
  */
 interface StockCardServiceInterface 
 {    
-    public function insertStockCard(ItemInterface $item, ClientStockCardInterface $entity = null):StockCardInterface;
+    public function insertStockCard(ItemInterface $item, ClientStockCardInterface $entity):StockCardInterface;
 }

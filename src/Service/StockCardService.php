@@ -16,25 +16,15 @@ class StockCardService implements StockCardServiceInterface
     
     protected $stockCardRepo;
     
-    use Service;
+    use ServiceTrait;
     
     public function __construct(StockCardRepoInterface $stockCardRepo) 
     {
         $this->stockCardRepo = $stockCardRepo;
     }
     
-    public function insertStockCard(ItemInterface $item, ClientStockCardInterface $entity = null):StockCardInterface
+    public function insertStockCard(ItemInterface $item, ClientStockCardInterface $entity):StockCardInterface
     {
-        switch($entity->getTypeTransaction())
-        {
-            case StockCardInterface::TYPE_ADD:
-                break;
-            case StockCardInterface::TYPE_GET:
-                break;
-            default:
-                throw new \Exception('invalid type transaction : '. $entity->getTypeTransaction());
-                break;
-        }
         $stockCard = $this->stockCardRepo->createStockCard();
         $stockCard->setCreatedAt(new \DateTime())
                 ->setItem($item)

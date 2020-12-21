@@ -5,39 +5,13 @@ namespace Kematjaya\ItemPack\Tests;
 use Kematjaya\ItemPack\Exception\NotSufficientStockException;
 use Kematjaya\ItemPack\Exception\PackageEmptyException;
 use Kematjaya\ItemPack\Service\StockServiceInterface;
-use Kematjaya\ItemPack\Tests\Model\Item;
-use Kematjaya\ItemPack\Tests\Model\Packaging;
-use Kematjaya\ItemPack\Tests\Model\ItemPackage;
+
 /**
  * @author Nur Hidayatullah <kematjaya0@gmail.com>
  */
 class StockServicesTest extends KmjItemPackBundleTest 
 {
-    protected function buildObject(): Item
-    {
-        $item = (new Item())
-                ->setPrincipalPrice(1000)
-                ->setCode('test')
-                ->setName('Test')
-                ->setLastPrice(1200)
-                ->setLastStock(0)
-                ->setUseBarcode(false);
-        
-        return $item;
-    }
-    
-    protected function buildItemPackage(Item $item):ItemPackage
-    {
-        $packaging = (new Packaging())->setCode('pcs')->setName('PCS');
-        
-        return (new ItemPackage())
-                ->setItem($item)
-                ->setPackaging($packaging)
-                ->setQuantity(1)
-                ->setPrincipalPrice($item->getPrincipalPrice())
-                ->setSalePrice($item->getLastPrice());
-    }
-    
+  
     public function testInstance():StockServiceInterface
     {
         $container = $this->getContainer();
