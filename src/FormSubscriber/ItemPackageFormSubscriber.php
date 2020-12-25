@@ -13,6 +13,11 @@ use Kematjaya\ItemPack\Lib\ItemPackaging\Entity\ItemPackageInterface;
  */
 class ItemPackageFormSubscriber implements EventSubscriberInterface 
 {
+    
+    /**
+     * 
+     * @var ItemPackageRepoInterface
+     */
     private $itemPackageRepo;
     
     public function __construct(ItemPackageRepoInterface $itemPackageRepo) 

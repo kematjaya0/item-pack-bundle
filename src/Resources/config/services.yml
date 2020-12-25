@@ -15,3 +15,22 @@ services:
         
     Kematjaya\ItemPack\Service\PriceLogServiceInterface:
         class: Kematjaya\ItemPack\Service\PriceService
+        
+    Kematjaya\ItemPack\FormSubscriber\ItemEventSubscriber:
+        class: Kematjaya\ItemPack\FormSubscriber\ItemEventSubscriber
+        
+    Kematjaya\ItemPack\FormSubscriber\ItemCategoryEventSubscriber:
+        class: Kematjaya\ItemPack\FormSubscriber\ItemCategoryEventSubscriber
+        
+    Kematjaya\ItemPack\FormSubscriber\ItemPackageFormSubscriber:
+        class: Kematjaya\ItemPack\FormSubscriber\ItemPackageFormSubscriber
+        
+    Kematjaya\ItemPack\Listener\PriceLogListener:
+        class: Kematjaya\ItemPack\Listener\PriceLogListener
+        tags: 
+            - { name: doctrine.event_listener, event: onFlush }
+            
+    Kematjaya\ItemPack\Fixtures\ItemCategoryFixtures:
+        class: Kematjaya\ItemPack\Fixtures\ItemCategoryFixtures
+        tags: 
+            - doctrine.fixture.orm

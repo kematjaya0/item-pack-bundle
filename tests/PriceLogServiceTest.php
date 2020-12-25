@@ -15,7 +15,7 @@ class PriceLogServiceTest extends KmjItemPackBundleTest
         $container = $this->getContainer();
         $this->assertTrue($container->has('kematjaya.price_log_service'));
         $service = $container->get('kematjaya.price_log_service');
-            $this->assertInstanceOf(PriceLogServiceInterface::class, $service);
+        $this->assertInstanceOf(PriceLogServiceInterface::class, $service);
         
         return $service;
     }

@@ -1,14 +1,15 @@
 <?php
 
-namespace Kematjaya\ItemPack\Lib\ItemCategory\DataFixtures;
+namespace Kematjaya\ItemPack\Fixtures;
 
 use Kematjaya\ItemPack\Lib\ItemCategory\Repo\ItemCategoryRepoInterface;
 use Doctrine\Persistence\ObjectManager;
 use Doctrine\Bundle\FixturesBundle\Fixture;
+use Doctrine\Bundle\FixturesBundle\FixtureGroupInterface;
 /**
  * @author Nur Hidayatullah <kematjaya0@gmail.com>
  */
-class ItemcategoryFixtures extends Fixture
+class ItemCategoryFixtures extends Fixture implements FixtureGroupInterface
 {
     private $itemCategoryRepo;
     
@@ -28,6 +29,13 @@ class ItemcategoryFixtures extends Fixture
         }
             
         $manager->flush();
+    }
+    
+    public static function getGroups(): array 
+    {
+        return [
+            'kmj-item'
+        ];
     }
 
 }

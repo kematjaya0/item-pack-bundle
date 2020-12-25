@@ -1,19 +1,21 @@
 <?php
 
-namespace Kematjaya\ItemPack\Lib\Price\Event;
+namespace Kematjaya\ItemPack\Listener;
 
-use Doctrine\Common\EventSubscriber;
-use Doctrine\ORM\Events;
 use Doctrine\ORM\Event\OnFlushEventArgs;
 use Kematjaya\ItemPack\Service\PriceLogServiceInterface;
 use Kematjaya\ItemPack\Lib\Price\Entity\PriceLogInterface;
 
 /**
- * @deprecated, use Kematjaya\ItemPack\Listener\PriceLogListener instead
  * @author Nur Hidayatullah <kematjaya0@gmail.com>
  */
-class PriceLogEventSubscriber implements EventSubscriber
+class PriceLogListener 
 {
+    
+    /**
+     * 
+     * @var PriceLogServiceInterface
+     */
     private $priceLogService;
     
     public function __construct(PriceLogServiceInterface $priceLogService) 
@@ -21,37 +23,33 @@ class PriceLogEventSubscriber implements EventSubscriber
         $this->priceLogService = $priceLogService;
     }
     
-    public function getSubscribedEvents(): array
-    {
-        return [
-            Events::onFlush
-        ];
-    }
-    
     public function onFlush(OnFlushEventArgs $eventArgs)
     {
         $em = $eventArgs->getEntityManager();
         $uow = $em->getUnitOfWork();
         
-        foreach ($uow->getScheduledEntityInsertions() as $entity) 
-        {
-            if($entity instanceof PriceLogInterface) {
-                $this->updateprice($entity);
+        foreach ($uow->getScheduledEntityInsertions() as $entity) {
+            if(!$entity instanceof PriceLogInterface) {
+                continue;
             }
+            
+            $this->updateprice($entity);
         }
         
-        foreach ($uow->getScheduledEntityUpdates() as $entity) 
-        {
-            if($entity instanceof PriceLogInterface) {
-                $this->updatePrice($entity);
+        foreach ($uow->getScheduledEntityUpdates() as $entity) {
+            if(!$entity instanceof PriceLogInterface) {
+                continue;
             }
+            
+            $this->updatePrice($entity);
         }
         
-        foreach($uow->getScheduledEntityDeletions() as $entity) 
-        {
-            if($entity instanceof PriceLogInterface) {
-                $this->updatePrice($entity);
+        foreach($uow->getScheduledEntityDeletions() as $entity) {
+            if(!$entity instanceof PriceLogInterface) {
+                continue;
             }
+            
+            $this->updatePrice($entity);
         }
     }
     

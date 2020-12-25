@@ -1,6 +1,6 @@
 <?php
 
-namespace Kematjaya\ItemPack\Lib\Item\EventSubscriber;
+namespace Kematjaya\ItemPack\FormSubscriber;
 
 use Kematjaya\ItemPack\Lib\Item\Entity\ItemInterface;
 use Symfony\Component\Form\FormEvent;
@@ -24,7 +24,6 @@ class ItemEventSubscriber implements EventSubscriberInterface
     {
         $item = $event->getData();
         if(!$item instanceof ItemInterface) {
-            
             return;
         }
         
