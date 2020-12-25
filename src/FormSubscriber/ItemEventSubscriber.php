@@ -2,15 +2,27 @@
 
 namespace Kematjaya\ItemPack\FormSubscriber;
 
+use Kematjaya\ItemPack\Lib\Item\Repo\ItemRepoInterface;
 use Kematjaya\ItemPack\Lib\Item\Entity\ItemInterface;
 use Symfony\Component\Form\FormEvent;
 use Symfony\Component\Form\FormEvents;
+use Symfony\Component\Form\FormError;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 /**
  * @author Nur Hidayatullah <kematjaya0@gmail.com>
  */
 class ItemEventSubscriber implements EventSubscriberInterface 
 {
+    /**
+     * 
+     * @var ItemRepoInterface
+     */
+    private $itemRepo;
+    
+    public function __construct(ItemRepoInterface $itemRepo) 
+    {
+        $this->itemRepo = $itemRepo;
+    }
     
     public static function getSubscribedEvents()
     {
@@ -52,6 +64,11 @@ class ItemEventSubscriber implements EventSubscriberInterface
 
         if(null === $item->getUseBarcode()) {
             $item->setUseBarcode(false);
+        }
+        
+        $identicItem = $this->itemRepo->findIdenticItem($item);
+        if($identicItem) {
+            $event->getForm()->get('code')->addError(new FormError(sprintf("item with code %s already exist", $item->getCode())));
         }
         
         $event->setData($item);

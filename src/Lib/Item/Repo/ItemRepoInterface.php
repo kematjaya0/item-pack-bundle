@@ -13,4 +13,6 @@ interface ItemRepoInterface
     public function createItem():ItemInterface;
     
     public function save(ItemInterface $item):void;
+    
+    public function findIdenticItem(ItemInterface $item):?ItemInterface;
 }
