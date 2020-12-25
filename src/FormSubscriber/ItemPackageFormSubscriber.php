@@ -1,6 +1,6 @@
 <?php
 
-namespace Kematjaya\ItemPack\Lib\ItemPackaging\Event;
+namespace Kematjaya\ItemPack\FormSubscriber;
 
 use Symfony\Component\Form\FormEvent;
 use Symfony\Component\Form\FormEvents;
