@@ -35,14 +35,14 @@ class ItemPackageFormSubscriber implements EventSubscriberInterface
     public function postSubmit(FormEvent $event)
     {
         $data = $event->getData();
-        if(!$data instanceof ItemPackageInterface) {
+        if (!$data instanceof ItemPackageInterface) {
             return;
         }   
         
         $form = $event->getForm();
-        if($data->isSmallestUnit()) {
+        if ($data->isSmallestUnit()) {
             $smallestUnit = $this->itemPackageRepo->findSmallestUnitByItem($data->getItem());
-            if($smallestUnit and $smallestUnit->getId() !== $data->getId()) {
+            if ($smallestUnit and $smallestUnit->getId() !== $data->getId()) {
                 $form->addError(new FormError('kemasan terkecil tidak boleh lebih dari 1'));
                 return false;
             }
@@ -52,11 +52,11 @@ class ItemPackageFormSubscriber implements EventSubscriberInterface
             $data->setIsSmallestUnit(false);
         }
 
-        if($data->getPrincipalPrice()) {
+        if ($data->getPrincipalPrice()) {
             $data->setPrincipalPrice(0);
         }
         
-        if($data->getSalePrice()) {
+        if ($data->getSalePrice()) {
             $data->setSalePrice(0);
         }
 

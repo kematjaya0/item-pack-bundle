@@ -13,12 +13,12 @@ trait ServiceTrait
 {
     protected function getItemPackByPackagingOrSmallestUnit(ItemInterface $item, PackagingInterface $packaging = null):?ItemPackageInterface
     {
-        if($item->getItemPackages()->isEmpty()) {
+        if ($item->getItemPackages()->isEmpty()) {
             throw new PackageEmptyException(get_class($item));
         }
         
         return $item->getItemPackages()->filter(function (ItemPackageInterface $itemPackage) use ($packaging) {
-            if($packaging) {
+            if ($packaging) {
                 return $packaging->getCode() === $itemPackage->getPackaging()->getCode();
             }
             

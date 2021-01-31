@@ -23,11 +23,11 @@ class ItemCategoryEventSubscriber implements EventSubscriberInterface
     public function preSetData(FormEvent $event)
     {
         $itemCategory = $event->getData();
-        if(!$itemCategory instanceof ItemCategoryInterface) {
+        if (!$itemCategory instanceof ItemCategoryInterface) {
             return;
         }
         
-        if(!$itemCategory->getId()) {
+        if (!$itemCategory->getId()) {
             $itemCategory->setIsActive(true);
         }
 
@@ -37,7 +37,7 @@ class ItemCategoryEventSubscriber implements EventSubscriberInterface
     public function postSubmit(FormEvent $event)
     {
         $itemCategory = $event->getData();
-        if(!$itemCategory instanceof ItemCategoryInterface) {
+        if (!$itemCategory instanceof ItemCategoryInterface) {
             return;
         }
         

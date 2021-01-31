@@ -36,14 +36,13 @@ class StockService implements StockServiceInterface
     public function updateStock(ItemInterface $item, float $quantity = 0, PackagingInterface $packaging = null):ItemInterface
     {
         $itemPack = $item->getItemPackages()->filter(function (ItemPackageInterface $itemPackage) use ($packaging) {
-            if($packaging)
-            {
+            if ($packaging) {
                 return $packaging->getCode() === $itemPackage->getPackaging()->getCode();
             }
             return $itemPackage->isSmallestUnit();
         })->first();
         
-        if($itemPack instanceof ItemPackageInterface) {
+        if ($itemPack instanceof ItemPackageInterface) {
             $quantity = $quantity * $itemPack->getQuantity();
         }
         
@@ -54,7 +53,7 @@ class StockService implements StockServiceInterface
     {
         $itemPack = $this->getItemPackByPackagingOrSmallestUnit($item, $packaging);
         
-        if($itemPack instanceof ItemPackageInterface) {
+        if ($itemPack instanceof ItemPackageInterface) {
             $quantity = ($itemPack->isSmallestUnit()) ? $quantity : $quantity * $itemPack->getQuantity();
         }
         
@@ -70,12 +69,12 @@ class StockService implements StockServiceInterface
     {
         $itemPack = $this->getItemPackByPackagingOrSmallestUnit($item, $packaging);
         
-        if($itemPack instanceof ItemPackageInterface) {
+        if ($itemPack instanceof ItemPackageInterface) {
             $quantity = ($itemPack->isSmallestUnit()) ? $quantity : $quantity * $itemPack->getQuantity();
         }
         
         $lastStock = $item->getLastStock() - $quantity;
-        if($lastStock < 0) {
+        if ($lastStock < 0) {
             throw new NotSufficientStockException($item->getLastStock(), $quantity);
         }
         

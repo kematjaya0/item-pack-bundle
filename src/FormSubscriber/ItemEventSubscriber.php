@@ -35,7 +35,7 @@ class ItemEventSubscriber implements EventSubscriberInterface
     public function preSetData(FormEvent $event)
     {
         $item = $event->getData();
-        if(!$item instanceof ItemInterface) {
+        if (!$item instanceof ItemInterface) {
             return;
         }
         
@@ -52,22 +52,22 @@ class ItemEventSubscriber implements EventSubscriberInterface
     public function postSubmit(FormEvent $event)
     {
         $item = $event->getData();
-        if(!$item instanceof ItemInterface) {
+        if (!$item instanceof ItemInterface) {
             return;
         }
         
         $item->setCode(trim($item->getCode()));
         $item->setName(trim($item->getName()));
-        if(null === $item->getLastStock()) {
+        if (null === $item->getLastStock()) {
             $item->setLastStock(0);
         }
 
-        if(null === $item->getUseBarcode()) {
+        if (null === $item->getUseBarcode()) {
             $item->setUseBarcode(false);
         }
         
         $identicItem = $this->itemRepo->findIdenticItem($item);
-        if($identicItem) {
+        if ($identicItem) {
             $event->getForm()->get('code')->addError(new FormError(sprintf("item with code %s already exist", $item->getCode())));
         }
         

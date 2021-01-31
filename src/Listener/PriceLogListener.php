@@ -29,7 +29,7 @@ class PriceLogListener
         $uow = $em->getUnitOfWork();
         
         foreach ($uow->getScheduledEntityInsertions() as $entity) {
-            if(!$entity instanceof PriceLogInterface) {
+            if (!$entity instanceof PriceLogInterface) {
                 continue;
             }
             
@@ -37,7 +37,7 @@ class PriceLogListener
         }
         
         foreach ($uow->getScheduledEntityUpdates() as $entity) {
-            if(!$entity instanceof PriceLogInterface) {
+            if (!$entity instanceof PriceLogInterface) {
                 continue;
             }
             
@@ -45,7 +45,7 @@ class PriceLogListener
         }
         
         foreach($uow->getScheduledEntityDeletions() as $entity) {
-            if(!$entity instanceof PriceLogInterface) {
+            if (!$entity instanceof PriceLogInterface) {
                 continue;
             }
             
@@ -55,7 +55,7 @@ class PriceLogListener
     
     private function updatePrice(PriceLogInterface $entity)
     {
-        switch($entity->getStatus())
+        switch ($entity->getStatus())
         {
             case PriceLogInterface::STATUS_APPROVED:
                 $this->priceLogService->approvePrice($entity);

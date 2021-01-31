@@ -61,12 +61,12 @@ class PriceService implements PriceServiceInterface, PriceLogServiceInterface
         
         $itemPack = $this->getItemPackByPackagingOrSmallestUnit($item, $packaging);
         
-        if(!$itemPack instanceof ItemPackageInterface) {
+        if (!$itemPack instanceof ItemPackageInterface) {
             throw new SmallestPackageNotFoundException($item);
         }
         
         $itemPack->setPrincipalPrice($price);
-        if($itemPack->isSmallestUnit()) {
+        if ($itemPack->isSmallestUnit()) {
             $item->setPrincipalPrice($price);
         }
 
@@ -81,12 +81,12 @@ class PriceService implements PriceServiceInterface, PriceLogServiceInterface
         $this->validate($item);
         
         $itemPack = $this->getItemPackByPackagingOrSmallestUnit($item, $packaging);
-        if(!$itemPack instanceof ItemPackageInterface) {
+        if (!$itemPack instanceof ItemPackageInterface) {
             throw new SmallestPackageNotFoundException($item);
         }
         
         $itemPack->setSalePrice($price);
-        if($itemPack->isSmallestUnit()) {
+        if ($itemPack->isSmallestUnit()) {
             $item->setLastPrice($price);
         }
 
@@ -104,11 +104,11 @@ class PriceService implements PriceServiceInterface, PriceLogServiceInterface
      */
     public function saveNewPrice(ItemInterface $item, float $price = 0):?PriceLogInterface
     {
-        if(!$item instanceof PriceLogClientInterface) {
+        if (!$item instanceof PriceLogClientInterface) {
             return null;
         }
         
-        if($price == $item->getPrincipalPrice()) {
+        if ($price == $item->getPrincipalPrice()) {
             return null;
         }
         
@@ -119,11 +119,11 @@ class PriceService implements PriceServiceInterface, PriceLogServiceInterface
                 ->setStatus(PriceLogInterface::STATUS_NEW)
                 ->setPrincipalPrice($price)
                 ->setSalePrice($price);
-        if($item->getActivePrincipalPrice()) {
+        if ($item->getActivePrincipalPrice()) {
             $priceLog->setPrincipalPriceOld($item->getActivePrincipalPrice());
         }
         
-        if($item->getActiveSalePrice()) {
+        if ($item->getActiveSalePrice()) {
             $priceLog->setSalePriceOld($item->getActiveSalePrice());
         }
 
@@ -163,8 +163,7 @@ class PriceService implements PriceServiceInterface, PriceLogServiceInterface
     
     protected function validate(ItemInterface $item):bool
     {
-        if($item->getItemPackages()->isEmpty())
-        {
+        if ($item->getItemPackages()->isEmpty()) {
             throw new PackageEmptyException(get_class($item));
         }
         
